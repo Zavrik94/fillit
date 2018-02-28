@@ -1,31 +1,36 @@
 NAME =	fillit
-SRC =	ft_read.c \
-		ft_checker.c \
-		ft_splitinput.c \
-		ft_lists.c \
-		ft_splittetra.c \
-		ft_counttetramin.c \
-		ft_algorithm.c \
-		ft_find.c \
-		ft_printarr.c \
-		ft_writemap.c \
-		main.c
-
+SRC_D = src/
+SRC =	$(SRC_D)ft_read.c \
+		$(SRC_D)ft_checker.c \
+		$(SRC_D)ft_splitinput.c \
+		$(SRC_D)ft_lists.c \
+		$(SRC_D)ft_splittetra.c \
+		$(SRC_D)ft_counttetramin.c \
+		$(SRC_D)ft_algorithm.c \
+		$(SRC_D)ft_find.c \
+		$(SRC_D)ft_printarr.c \
+		$(SRC_D)ft_writemap.c \
+		fillit.c
+LIB_D = libft/
+LIB = $(LIB_D)libft.a
 OBJ =	$(SRC:.c=.o)
 CFLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	gcc $(CFLAGS) -o $(NAME) $^
+	make -C $(LIB_D)
+	gcc $(CFLAGS) -o $(NAME) $^ $(LIB) -I $(LIB_D)
 
 %.o: %.c
 	gcc $(CFLAGS) -o $@ -c $<
 
 clean:
+	make clean -C $(LIB_D)
 	rm -f $(OBJ)
 
 fclean:
+	make fclean -C $(LIB_D)
 	rm -f $(NAME)
 
 re: fclean all

@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "src/fillit.h"
 
 int         main(int argc, char **argv)
 {

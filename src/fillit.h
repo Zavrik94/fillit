@@ -6,6 +6,7 @@
 #include <string.h>
 #include <fcntl.h>
 #include <stdio.h>
+#include "../libft/libft.h"
 
 typedef struct		tetra
 {
