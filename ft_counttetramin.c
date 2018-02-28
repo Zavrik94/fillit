@@ -1,7 +1,7 @@
 
 #include "fillit.h"
 
-int		ft_long2(char *s)
+int		ft_countTetramin(char *s)
 {
 	int	i;
 	int cword;

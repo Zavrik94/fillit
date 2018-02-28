@@ -1,10 +1,10 @@
 NAME =	fillit
 SRC =	ft_read.c \
 		ft_checker.c \
-		ft_strsplit.c \
+		ft_splitinput.c \
 		ft_lists.c \
-		ft_strsplit2.c \
-		ft_long.c \
+		ft_splittetra.c \
+		ft_counttetramin.c \
 		ft_algorithm.c \
 		ft_find.c \
 		ft_printarr.c \

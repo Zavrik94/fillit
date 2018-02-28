@@ -12,30 +12,57 @@
 
 #include "fillit.h"
 
-static int		*ft_long(char *s, char ch)
+static int		countInTetra(char *s, char ch, int i)
+{
+	int c;
+
+	c = 0;
+	if (!s)
+		return (0);
+	while (s[i] != '\0' && s[i] != ch)
+	{
+		c++;
+		i++;
+	}
+	return (c);
+}
+
+static int		*ft_longTetra(char *s, char ch)
 {
 	int	i;
 	int cword;
+	int	c;
 	int	*res;
 
 	i = -1;
 	cword = 0;
+	c = 1;
 	if (!s)
 		return (NULL);
 	while (s[++i] != '\0')
 		if (s[i] != ch && i == 0)
 			cword++;
-		else if ((s[i] != ch && s[i - 1] == ch && s[i - 2] == ch))
+		else if ((s[i] != ch && s[i - 1] == ch))
 			cword++;
 	if (!(res = (int*)malloc(sizeof(int) * (cword + 1))))
 		return (NULL);
-	res[0] = cword + 1;
-	while (cword != 0)
-		res[cword--] = 20;
+	i = -1;
+	while (s[++i] != '\0')
+	{
+		if (s[i] == ch && s[i + 1] != ch)
+		{
+			res[c++] = countInTetra(s, ch, i + 1);
+		}
+		else if (i == 0 && s[i] != ch)
+		{
+			res[c++] = countInTetra(s, ch, 0);
+		}
+	}
+	res[0] = cword;
 	return (res);
 }
 
-static char		*ft_write(char *s, int i, int c)
+static char		*ft_writeTetra(char *s, int i, int c)
 {
 	char	*res;
 	int		j;
@@ -53,18 +80,17 @@ static char		*ft_write(char *s, int i, int c)
 	return (res);
 }
 
-char			**ft_strsplit(const char *s)
+char			**ft_splitTetra(const char *s)
 {
 	int		i;
 	int		c;
 	int		c1;
 	int		*res;
 	char	**rch;
-	char	ch;
+	char	ch = '\n';
 
 	c = 0;
-	ch = '\n';
-	res = ft_long((char*)s, ch);
+	res = ft_longTetra((char*)s, ch);
 	if (!res || !(rch = (char **)malloc(sizeof(char *) * (res[0] + 1))))
 		return (NULL);
 	i = -1;
@@ -73,9 +99,9 @@ char			**ft_strsplit(const char *s)
 	{
 		c1 = c + 1;
 		if (s[i] != ch && i == 0)
-			rch[c++] = ft_write((char *)s, i, res[c1]);
-		else if ((s[i] != ch && s[i - 1] == ch && s[i - 2 ] == ch))
-			rch[c++] = ft_write((char *)s, i, res[c1]);
+			rch[c++] = ft_writeTetra((char *)s, i, res[c1]);
+		else if ((s[i] != ch && s[i - 1] == ch))
+			rch[c++] = ft_writeTetra((char *)s, i, res[c1]);
 	}
 	rch[c] = 0;
 	return (rch);

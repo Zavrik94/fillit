@@ -12,36 +12,50 @@
 
 #include "fillit.h"
 
-int         main()
+int         main(int argc, char **argv)
 {
     char    *read;
     char    **res;
     char    ***res2;
     tetra   *tetramin;
-    char    **map;
     int     i;
 
-	read = ft_read("test.txt");
-    res = ft_strsplit(read);
-    if (!(res2 = (char***)malloc(sizeof(char**) * (ft_long2(read) + 1))))
-        return (0);
-    i = 0;
-    while (res[i])
+    if (argc != 2)
     {
-        res2[i] = ft_strsplit2(res[i]);
-        i++;
+        write(1, "error\n", 6);
+        return (0);
     }
-    res2[i] = 0;
-    tetramin = filList(res2);
-    
-    printf("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-    map = ft_strsplit2(writeMap(ft_long2(read), 1));
-    setTetra(map, tetramin);
-    ft_printarr(map);
-    free(read);
-    free(res);
-    free(res2);
-    free(tetramin);
-    free(map);
-    return (0);
+    else
+    {
+	    read = ft_read(argv[1]);
+        //if (ft_checker(read) == 0)
+        //{
+          //  write(1, "error\n", 6);
+            //return (0);
+        //}
+        //else
+        //{
+            res = ft_splitInput(read);
+            if (!(res2 = (char***)malloc(sizeof(char**) * (ft_countTetramin(read) + 1))))
+                return (0);
+            i = 0;
+            while (res[i])
+            {
+                res2[i] = ft_splitTetra(res[i]);
+                i++;
+            }
+            res2[i] = 0;
+            isMapChange = 0;
+            tetramin = filList(res2);
+            map = ft_splitTetra(writeMap(ft_countTetramin(read), tetramin));
+            setTetra(tetramin);
+            ft_printarr(map);
+            free(read);
+            free(res);
+            free(res2);
+            free(tetramin);
+            free(map);
+            return (0);
+        //}
+    }
 }

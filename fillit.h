@@ -21,7 +21,11 @@ typedef struct		tetra
 	struct	tetra	*prev;
 }					tetra;
 
-void				setTetra(char **map, tetra *tetramin);
+char				**map;
+int 				isMapChange;
+
+void				ft_printarr(char **arr);
+void				setTetra(tetra *tetramin);
 int					*ft_coord(char **s);
 int					checkPossible(char **map, tetra *tetramin, int xcoord, int ycoord);
 int					*findStart(char **map, tetra *tetramin);
@@ -31,12 +35,10 @@ tetra				*firstList(tetra *tetramin);
 tetra				*filList(char ***res2);
 int					ft_checker(char *s);
 char				*ft_read(char *file);
-char				*writeMap(int count, int iter);
-
-int					ft_error(int error);
-char				**ft_strsplit(const char *s);
-char				**ft_strsplit2(const char *s);
-int					ft_long2(char *s);
-void				ft_printarr(char **arr);
+char				*writeMap(int count, tetra *tetramin);
+char				**biggerMap(char **map);
+char				**ft_splitInput(const char *s);
+char				**ft_splitTetra(const char *s);
+int					ft_countTetramin(char *s);
 
 #endif

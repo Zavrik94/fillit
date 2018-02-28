@@ -1,5 +1,3 @@
-
-
 #include "fillit.h"
 
 void    putTetra(char **map, tetra *tetramin, int   *coord)
@@ -24,8 +22,6 @@ void    putTetra(char **map, tetra *tetramin, int   *coord)
         {
             if (tetramin->tetr[y][x] == '#')
                 map[coord[1]][coord[0]] = 65 + tetramin->n;
-            //else if (tetramin.tetr[y][x] == '.')
-            //    map[coord[1]][coord[0]] = ' ';
             coord[0]++;
             x++;
             c++;
@@ -66,18 +62,20 @@ int     isMove(char **map, tetra *tetramin)
 
     x = 0;
     y = 0;
-    temp = (char**)malloc(sizeof(char*) * strlen(map[0]));
+    temp = (char**)malloc(sizeof(char*) * strlen(map[0]) + 1);
     while (map[y])
     {
-        temp[y] = (char*)malloc(sizeof(char) * strlen(map[0]));
+        temp[y] = (char*)malloc(sizeof(char) * strlen(map[0]) + 1);
         x = 0;
         while (map[y][x])
         {
             temp[y][x] = map[y][x];
             x++;
         }
+        temp[y][x] = '\0';
         y++;
     }
+    temp[y] = 0;
     cur = currCoord(temp, tetramin);
     deleteTetra(temp, tetramin);
     if (findNextStart(temp, tetramin, cur) == NULL)
@@ -89,18 +87,20 @@ int     isMove(char **map, tetra *tetramin)
     return (1);
 }
 
-tetra   *move(char **map, tetra *tetramin)
+tetra   *move(tetra *tetramin)
 {
     int *res;
 
-    printf("tetramin at start move:\n");
-    ft_printarr(tetramin->tetr);
-    if (isMove(map, tetramin) == 0)
+    if (isMove(map, tetramin) == 0 && tetramin->prev == NULL)
     {
-        printf("Cant move this tetra: \n");
-        ft_printarr(tetramin->tetr);
+            map = biggerMap(map);
+            tetramin = firstList(tetramin);
+            return (tetramin->next);
+    }
+    else if (isMove(map, tetramin) == 0)
+    {
         deleteTetra(map, tetramin);
-        tetramin = move(map, tetramin->prev)->prev;
+        tetramin = move(tetramin->prev)->prev;
     }
     else
     {
@@ -112,23 +112,22 @@ tetra   *move(char **map, tetra *tetramin)
     return (tetramin->next);
 }
 
-void    setTetra(char **map,tetra *tetramin)
+void    setTetra(tetra *tetramin)
 {
     int     *coord;
 
-    printf("tetra at start setTetra:\n");
-    ft_printarr(tetramin->tetr);
     if (tetramin == NULL)
         return ;
     while (findStart(map, tetramin) == NULL)
     {
-        tetramin = move(map, tetramin->prev);
-        if (tetramin == NULL)
-            return ;
+        tetramin = move(tetramin->prev);
+        if (isMapChange == 1)
+        {
+            tetramin = firstList(tetramin);
+            isMapChange = 0;
+        }
     }
     coord = findStart(map, tetramin);
     putTetra(map, tetramin, coord);
-    printf("Map before next:\n");
-    ft_printarr(map);
-    setTetra(map, tetramin->next);
+    setTetra(tetramin->next);
 }

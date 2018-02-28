@@ -100,7 +100,7 @@ int     *findStart(char **map, tetra *tetramin)
         x = 0;
         while (map[y][x])
         {
-            if (map[y][x] == '.' && checkPossible(map, tetramin, x, y))
+            if (checkPossible(map, tetramin, x, y))
             {
                     res[0] = x;
                     res[1] = y;
@@ -133,7 +133,7 @@ int     *currCoord(char **map, tetra *tetramin)
     {
         x = 0;
         while(map[y][x])
-        {        printf("x : %d y: = %d \n", x, y);
+        {
             if (map[y][x] == tetramin->letter)
                 {
                     if (x < minx)
@@ -169,7 +169,7 @@ int     *findNextStart(char **map, tetra *tetramin, int *coord)
             x = 0;
         while (map[y][x])
         {
-            if (map[y][x] == '.' && checkPossible(map, tetramin, x, y))
+            if (checkPossible(map, tetramin, x, y))
             {
                     res[0] = x;
                     res[1] = y;
