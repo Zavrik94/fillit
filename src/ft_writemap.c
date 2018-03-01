@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_writemap.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azavrazh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/01 17:44:42 by azavrazh          #+#    #+#             */
+/*   Updated: 2018/03/01 17:44:44 by azavrazh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fillit.h"
 
 
-int     minMap(tetra *tetramin)
+int     minmap(t_tetra *tetramin)
 {
     int res;
 
@@ -18,7 +29,7 @@ int     minMap(tetra *tetramin)
     return (res);
 }
 
-char    *writeMap(int count, tetra *tetramin)
+char    *writemap(int count, t_tetra *tetramin)
 {  
         int     i;
         int     b;
@@ -35,8 +46,8 @@ char    *writeMap(int count, tetra *tetramin)
             ++i;
             sq = i * i;
         }
-        if (i < minMap(tetramin))
-            i = minMap(tetramin);
+        if (i < minmap(tetramin))
+            i = minmap(tetramin);
         c = i;
         lng = i * i;
         lng = lng + i;
@@ -59,7 +70,7 @@ char    *writeMap(int count, tetra *tetramin)
 
 }
 
-char    **biggerMap(char **map)
+char    **biggermap(char **g_map)
 {
     int     x;
     int     y;
@@ -68,7 +79,7 @@ char    **biggerMap(char **map)
 
     x = 0;
     y = 0;
-    i = ft_strlen(map[0]) + 1;
+    i = ft_strlen(g_map[0]) + 1;
     temp = (char**)malloc(sizeof(char*) * i);
     while (x < i)
     {
@@ -89,7 +100,7 @@ char    **biggerMap(char **map)
         y++;
     }
     temp[y] = 0;
-    ismapchange = 1;
+    g_ismapchange = 1;
     return (temp);
 
 }

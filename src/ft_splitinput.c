@@ -53,7 +53,7 @@ static char		*ft_write(char *s, int i, int c)
 	return (res);
 }
 
-char			**ft_splitInput(const char *s)
+char			**ft_splitinput(const char *s)
 {
 	int		i;
 	int		c;

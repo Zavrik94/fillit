@@ -1,20 +1,31 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_lists.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azavrazh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/01 17:44:09 by azavrazh          #+#    #+#             */
+/*   Updated: 2018/03/01 17:44:10 by azavrazh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fillit.h"
 
-tetra   *firstList(tetra *tetramin)
+t_tetra   *firstlist(t_tetra *tetramin)
 {
     while (tetramin->prev != NULL)
         tetramin = tetramin->prev;
     return (tetramin);
 }
 
-tetra   *filList(char ***res2)
+t_tetra   *fillist(char ***res2)
 {
     int     i;
-    tetra   *tetramin;
-    tetra   *temp;
+    t_tetra   *tetramin;
+    t_tetra   *temp;
 
-    tetramin = (tetra*)malloc(sizeof(tetra));
+    tetramin = (t_tetra*)malloc(sizeof(t_tetra));
     tetramin->prev = NULL;
     i = -1;
     while (res2[++i])
@@ -28,12 +39,12 @@ tetra   *filList(char ***res2)
         tetramin->next = NULL;
         tetramin->letter = i + 65;
         temp = tetramin;
-        tetramin->next = (tetra*)malloc(sizeof(tetra));
+        tetramin->next = (t_tetra*)malloc(sizeof(t_tetra));
         tetramin = tetramin->next;
         tetramin->prev = temp;
     }
     tetramin = tetramin->prev;
     tetramin->next = NULL;
-    tetramin = firstList(tetramin);
+    tetramin = firstlist(tetramin);
     return (tetramin);
 }

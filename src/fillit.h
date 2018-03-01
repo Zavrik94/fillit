@@ -1,13 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   fillit.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azavrazh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/01 17:39:06 by azavrazh          #+#    #+#             */
+/*   Updated: 2018/03/01 17:44:50 by azavrazh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <fcntl.h>
-#include "../libft/libft.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include <string.h>
+# include <fcntl.h>
+# include "../libft/libft.h"
 
-typedef struct		tetra
+typedef struct		s_tetra
 {
 	int				n;
 	int				x;
@@ -17,28 +28,28 @@ typedef struct		tetra
 	int				iter;
 	char			letter;
 	char			**tetr;
-	struct	tetra	*next;
-	struct	tetra	*prev;
-}					tetra;
+	struct s_tetra	*next;
+	struct s_tetra	*prev;
+}					t_tetra;
 
-char				**map;
-int 				ismapchange;
+char				**g_map;
+int					g_ismapchange;
 
 void				ft_printarr(char **arr);
-void				setTetra(tetra *tetramin);
+void				settetra(t_tetra *tetramin);
 int					*ft_coord(char **s);
-int					checkPossible(char **map, tetra *tetramin, int xcoord, int ycoord);
-int					*findStart(char **map, tetra *tetramin);
-int					*currCoord(char **map, tetra *tetramin);
-int					*findNextStart(char **map, tetra *tetramin, int *coord);
-tetra				*firstList(tetra *tetramin);
-tetra				*filList(char ***res2);
+int					checkpossible(char **map, t_tetra *tet, int xc, int yc);
+int					*findstart(char **map, t_tetra *tetramin);
+int					*currcoord(char **map, t_tetra *tetramin);
+int					*findnextstart(char **map, t_tetra *tetramin, int *coord);
+t_tetra				*firstlist(t_tetra *tetramin);
+t_tetra				*fillist(char ***res2);
 int					ft_checker(char *s);
 char				*ft_read(char *file);
-char				*writeMap(int count, tetra *tetramin);
-char				**biggerMap(char **map);
-char				**ft_splitInput(const char *s);
-char				**ft_splitTetra(const char *s);
-int					ft_countTetramin(char *s);
+char				*writemap(int count, t_tetra *tetramin);
+char				**biggermap(char **map);
+char				**ft_splitinput(const char *s);
+char				**ft_splittetra(const char *s);
+int					ft_counttetramin(char *s);
 
 #endif

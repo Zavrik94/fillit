@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_find.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azavrazh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/01 17:44:01 by azavrazh          #+#    #+#             */
+/*   Updated: 2018/03/01 17:44:04 by azavrazh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fillit.h"
 
@@ -41,7 +52,7 @@ int     *ft_coord(char **s)
     return (res);
 }
 
-int     checkPossible(char **map, tetra *tetramin, int xcoord, int ycoord)
+int     checkpossible(char **g_map,t_tetra *tet, int xc, int yc)
 {
     int     i;
     int     c;
@@ -51,23 +62,23 @@ int     checkPossible(char **map, tetra *tetramin, int xcoord, int ycoord)
 
     i = 0;
     c = 0;
-    x = tetramin->x;
-    y = tetramin->y;
+    x = tet->x;
+    y = tet->y;
     cord = (int*)malloc(sizeof(int) * 2);
-    cord[1] = (int)xcoord;
-    cord[0] = (int)ycoord;
-    if (((xcoord + tetramin->xlong) > ((int)ft_strlen(map[0]))) || ((ycoord + tetramin->ylong - 1) > ((int)ft_strlen(map[0]))))
+    cord[1] = (int)xc;
+    cord[0] = (int)yc;
+    if (((xc + tet->xlong) > ((int)ft_strlen(g_map[0]))) || ((yc + tet->ylong - 1) > ((int)ft_strlen(g_map[0]))))
     {
         return (0);
     }
-    while (tetramin->tetr[y] && i < (tetramin->ylong))
+    while (tet->tetr[y] && i < (tet->ylong))
     {
-        x = tetramin->x;
-        cord[1] = (int)xcoord;
+        x = tet->x;
+        cord[1] = (int)xc;
         c = 0;
-        while(tetramin->tetr[x] && c < tetramin->xlong)
+        while(tet->tetr[x] && c < tet->xlong)
         {
-            if (tetramin->tetr[y][x] == '#' && map[cord[0]][cord[1]] != '.')
+            if (tet->tetr[y][x] == '#' && g_map[cord[0]][cord[1]] != '.')
             {
                 free(cord);
                 return (0);
@@ -84,7 +95,7 @@ int     checkPossible(char **map, tetra *tetramin, int xcoord, int ycoord)
     return(1);
 }
 
-int     *findStart(char **map, tetra *tetramin)
+int     *findstart(char **g_map, t_tetra *tetramin)
 {
     int x;
     int y;
@@ -94,13 +105,13 @@ int     *findStart(char **map, tetra *tetramin)
     y = 0;
     if (!(res = (int*)malloc(sizeof(int) * 2)))
         return (0);
-    while (map[y])
+    while (g_map[y])
     {
         
         x = 0;
-        while (map[y][x])
+        while (g_map[y][x])
         {
-            if (checkPossible(map, tetramin, x, y))
+            if (checkpossible(g_map, tetramin, x, y))
             {
                     res[0] = x;
                     res[1] = y;
@@ -114,7 +125,7 @@ int     *findStart(char **map, tetra *tetramin)
     return (NULL);
 }
 
-int     *currCoord(char **map, tetra *tetramin)
+int     *currcoord(char **g_map, t_tetra *tetramin)
 {
     int     x;
     int     y;
@@ -124,17 +135,17 @@ int     *currCoord(char **map, tetra *tetramin)
 
     x = 0;
     y = 0;
-    minx = ft_strlen(map[0]);
-    miny = ft_strlen(map[0]);
+    minx = ft_strlen(g_map[0]);
+    miny = ft_strlen(g_map[0]);
     if (!(res = (int*)malloc(sizeof(int) * 4)))
         return(NULL);
 
-    while (map[y])
+    while (g_map[y])
     {
         x = 0;
-        while(map[y][x])
+        while(g_map[y][x])
         {
-            if (map[y][x] == tetramin->letter)
+            if (g_map[y][x] == tetramin->letter)
                 {
                     if (x < minx)
                         minx = x;
@@ -151,7 +162,7 @@ int     *currCoord(char **map, tetra *tetramin)
     return (res);
 }
 
-int     *findNextStart(char **map, tetra *tetramin, int *coord)
+int     *findnextstart(char **g_map, t_tetra *tetramin, int *coord)
 {
     int     x;
     int     y;
@@ -163,13 +174,13 @@ int     *findNextStart(char **map, tetra *tetramin, int *coord)
     if (!(res = (int*)malloc(sizeof(int) * 4)))
         return(NULL);
     i = 0;
-    while (map[y])
+    while (g_map[y])
     {
         if (i != 0)
             x = 0;
-        while (map[y][x])
+        while (g_map[y][x])
         {
-            if (checkPossible(map, tetramin, x, y))
+            if (checkpossible(g_map, tetramin, x, y))
             {
                     res[0] = x;
                     res[1] = y;

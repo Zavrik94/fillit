@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_algorithm.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: azavrazh <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2018/03/01 17:43:15 by azavrazh          #+#    #+#             */
+/*   Updated: 2018/03/01 17:43:32 by azavrazh         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "fillit.h"
 
-void    putTetra(char **map, tetra *tetramin, int   *coord)
+void    puttetra(char **g_map, t_tetra *tetramin, int   *coord)
 {
     int     i;
     int     c;
@@ -21,7 +33,7 @@ void    putTetra(char **map, tetra *tetramin, int   *coord)
         while(tetramin->tetr[x] && c < tetramin->xlong)
         {
             if (tetramin->tetr[y][x] == '#')
-                map[coord[1]][coord[0]] = 65 + tetramin->n;
+                g_map[coord[1]][coord[0]] = 65 + tetramin->n;
             coord[0]++;
             x++;
             c++;
@@ -32,20 +44,20 @@ void    putTetra(char **map, tetra *tetramin, int   *coord)
     }   
 }
 
- void    deleteTetra(char **map,tetra *tetramin)
+ void    deletetetra(char **g_map,t_tetra *tetramin)
 {
     int x;
     int y;
 
     x = 0;
     y = 0;
-    while (map[y])
+    while (g_map[y])
     {
         x = 0;
-        while (map[y][x])
+        while (g_map[y][x])
         {
-            if (map[y][x] == tetramin->letter)
-                map[y][x] = '.';
+            if (g_map[y][x] == tetramin->letter)
+                g_map[y][x] = '.';
             x++;
         }
         y++;
@@ -53,7 +65,7 @@ void    putTetra(char **map, tetra *tetramin, int   *coord)
 }
 
 
-int     isMove(char **map, tetra *tetramin)
+int     ismove(char **g_map, t_tetra *tetramin)
 {
     char    **temp;
     int     x;
@@ -62,23 +74,23 @@ int     isMove(char **map, tetra *tetramin)
 
     x = 0;
     y = 0;
-    temp = (char**)malloc(sizeof(char*) * ft_strlen(map[0]) + 1);
-    while (map[y])
+    temp = (char**)malloc(sizeof(char*) * ft_strlen(g_map[0]) + 1);
+    while (g_map[y])
     {
-        temp[y] = (char*)malloc(sizeof(char) * ft_strlen(map[0]) + 1);
+        temp[y] = (char*)malloc(sizeof(char) * ft_strlen(g_map[0]) + 1);
         x = 0;
-        while (map[y][x])
+        while (g_map[y][x])
         {
-            temp[y][x] = map[y][x];
+            temp[y][x] = g_map[y][x];
             x++;
         }
         temp[y][x] = '\0';
         y++;
     }
     temp[y] = 0;
-    cur = currCoord(temp, tetramin);
-    deleteTetra(temp, tetramin);
-    if (findNextStart(temp, tetramin, cur) == NULL)
+    cur = currcoord(temp, tetramin);
+    deletetetra(temp, tetramin);
+    if (findnextstart(temp, tetramin, cur) == NULL)
     {
         free(temp);
         return (0);
@@ -87,47 +99,47 @@ int     isMove(char **map, tetra *tetramin)
     return (1);
 }
 
-tetra   *move(tetra *tetramin)
+t_tetra   *move(t_tetra *tetramin)
 {
     int *res;
 
-    if (isMove(map, tetramin) == 0 && tetramin->prev == NULL)
+    if (ismove(g_map, tetramin) == 0 && tetramin->prev == NULL)
     {
-            map = biggerMap(map);
-            tetramin = firstList(tetramin);
+            g_map = biggermap(g_map);
+            tetramin = firstlist(tetramin);
             return (tetramin->next);
     }
-    else if (isMove(map, tetramin) == 0)
+    else if (ismove(g_map, tetramin) == 0)
     {
-        deleteTetra(map, tetramin);
+        deletetetra(g_map, tetramin);
         tetramin = move(tetramin->prev)->prev;
     }
     else
     {
-        res = currCoord(map, tetramin);
-        deleteTetra(map, tetramin);
-        res = findNextStart(map, tetramin, res);
-        putTetra(map, tetramin, res);
+        res = currcoord(g_map, tetramin);
+        deletetetra(g_map, tetramin);
+        res = findnextstart(g_map, tetramin, res);
+        puttetra(g_map, tetramin, res);
     }
     return (tetramin->next);
 }
 
-void    setTetra(tetra *tetramin)
+void    settetra(t_tetra *tetramin)
 {
     int     *coord;
 
     if (tetramin == NULL)
         return ;
-    while (findStart(map, tetramin) == NULL)
+    while (findstart(g_map, tetramin) == NULL)
     {
         tetramin = move(tetramin->prev);
-        if (ismapchange == 1)
+        if (g_ismapchange == 1)
         {
-            tetramin = firstList(tetramin);
-            ismapchange = 0;
+            tetramin = firstlist(tetramin);
+            g_ismapchange = 0;
         }
     }
-    coord = findStart(map, tetramin);
-    putTetra(map, tetramin, coord);
-    setTetra(tetramin->next);
+    coord = findstart(g_map, tetramin);
+    puttetra(g_map, tetramin, coord);
+    settetra(tetramin->next);
 }

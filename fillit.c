@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   fillit.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vmanoilo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: azavrazh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/12/26 17:29:19 by vmanoilo          #+#    #+#             */
-/*   Updated: 2017/12/26 17:29:21 by vmanoilo         ###   ########.fr       */
+/*   Created: 2018/03/01 17:45:07 by azavrazh          #+#    #+#             */
+/*   Updated: 2018/03/01 17:45:10 by azavrazh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int         main(int argc, char **argv)
     char    *read;
     char    **res;
     char    ***res2;
-    tetra   *tetramin;
+    t_tetra   *tetramin;
     int     i;
 
     if (argc != 2)
@@ -35,26 +35,26 @@ int         main(int argc, char **argv)
         //}
         //else
         //{
-            res = ft_splitInput(read);
-            if (!(res2 = (char***)malloc(sizeof(char**) * (ft_countTetramin(read) + 1))))
+            res = ft_splitinput(read);
+            if (!(res2 = (char***)malloc(sizeof(char**) * (ft_counttetramin(read) + 1))))
                 return (0);
             i = 0;
             while (res[i])
             {
-                res2[i] = ft_splitTetra(res[i]);
+                res2[i] = ft_splittetra(res[i]);
                 i++;
             }
             res2[i] = 0;
-            isMapChange = 0;
-            tetramin = filList(res2);
-            map = ft_splitTetra(writeMap(ft_countTetramin(read), tetramin));
-            setTetra(tetramin);
-            ft_printarr(map);
+            g_ismapchange = 0;
+            tetramin = fillist(res2);
+            g_map = ft_splittetra(writemap(ft_counttetramin(read), tetramin));
+            settetra(tetramin);
+            ft_printarr(g_map);
             free(read);
             free(res);
             free(res2);
             free(tetramin);
-            free(map);
+            free(g_map);
             return (0);
         //}
     }

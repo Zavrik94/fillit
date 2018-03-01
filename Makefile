@@ -29,7 +29,7 @@ clean:
 	make clean -C $(LIB_D)
 	rm -f $(OBJ)
 
-fclean:
+fclean: clean
 	make fclean -C $(LIB_D)
 	rm -f $(NAME)
 

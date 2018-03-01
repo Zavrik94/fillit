@@ -12,7 +12,7 @@
 
 #include "fillit.h"
 
-static int		countInTetra(char *s, char ch, int i)
+static int		countintetra(char *s, char ch, int i)
 {
 	int c;
 
@@ -27,7 +27,7 @@ static int		countInTetra(char *s, char ch, int i)
 	return (c);
 }
 
-static int		*ft_longTetra(char *s, char ch)
+static int		*ft_longtetra(char *s, char ch)
 {
 	int	i;
 	int cword;
@@ -51,18 +51,18 @@ static int		*ft_longTetra(char *s, char ch)
 	{
 		if (s[i] == ch && s[i + 1] != ch)
 		{
-			res[c++] = countInTetra(s, ch, i + 1);
+			res[c++] = countintetra(s, ch, i + 1);
 		}
 		else if (i == 0 && s[i] != ch)
 		{
-			res[c++] = countInTetra(s, ch, 0);
+			res[c++] = countintetra(s, ch, 0);
 		}
 	}
 	res[0] = cword;
 	return (res);
 }
 
-static char		*ft_writeTetra(char *s, int i, int c)
+static char		*ft_writetetra(char *s, int i, int c)
 {
 	char	*res;
 	int		j;
@@ -80,7 +80,7 @@ static char		*ft_writeTetra(char *s, int i, int c)
 	return (res);
 }
 
-char			**ft_splitTetra(const char *s)
+char			**ft_splittetra(const char *s)
 {
 	int		i;
 	int		c;
@@ -90,7 +90,7 @@ char			**ft_splitTetra(const char *s)
 	char	ch = '\n';
 
 	c = 0;
-	res = ft_longTetra((char*)s, ch);
+	res = ft_longtetra((char*)s, ch);
 	if (!res || !(rch = (char **)malloc(sizeof(char *) * (res[0] + 1))))
 		return (NULL);
 	i = -1;
@@ -99,9 +99,9 @@ char			**ft_splitTetra(const char *s)
 	{
 		c1 = c + 1;
 		if (s[i] != ch && i == 0)
-			rch[c++] = ft_writeTetra((char *)s, i, res[c1]);
+			rch[c++] = ft_writetetra((char *)s, i, res[c1]);
 		else if ((s[i] != ch && s[i - 1] == ch))
-			rch[c++] = ft_writeTetra((char *)s, i, res[c1]);
+			rch[c++] = ft_writetetra((char *)s, i, res[c1]);
 	}
 	rch[c] = 0;
 	return (rch);
