@@ -5,7 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include "../libft/libft.h"
 
 typedef struct		tetra
@@ -23,7 +22,7 @@ typedef struct		tetra
 }					tetra;
 
 char				**map;
-int 				isMapChange;
+int 				ismapchange;
 
 void				ft_printarr(char **arr);
 void				setTetra(tetra *tetramin);

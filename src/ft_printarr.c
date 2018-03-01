@@ -17,10 +17,10 @@ void	ft_printarr(char **arr)
 		c = 0;
 		while(arr[i][c])
 		{
-			printf("%c", arr[i][c]);
+			write(1, &arr[i][c], 1);
 			c++;
 		}
-		printf("\n");
+		write(1, "\n", 1);
 		i++;
 	}
 }

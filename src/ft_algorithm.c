@@ -62,10 +62,10 @@ int     isMove(char **map, tetra *tetramin)
 
     x = 0;
     y = 0;
-    temp = (char**)malloc(sizeof(char*) * strlen(map[0]) + 1);
+    temp = (char**)malloc(sizeof(char*) * ft_strlen(map[0]) + 1);
     while (map[y])
     {
-        temp[y] = (char*)malloc(sizeof(char) * strlen(map[0]) + 1);
+        temp[y] = (char*)malloc(sizeof(char) * ft_strlen(map[0]) + 1);
         x = 0;
         while (map[y][x])
         {
@@ -121,10 +121,10 @@ void    setTetra(tetra *tetramin)
     while (findStart(map, tetramin) == NULL)
     {
         tetramin = move(tetramin->prev);
-        if (isMapChange == 1)
+        if (ismapchange == 1)
         {
             tetramin = firstList(tetramin);
-            isMapChange = 0;
+            ismapchange = 0;
         }
     }
     coord = findStart(map, tetramin);

@@ -68,7 +68,7 @@ char    **biggerMap(char **map)
 
     x = 0;
     y = 0;
-    i = strlen(map[0]) + 1;
+    i = ft_strlen(map[0]) + 1;
     temp = (char**)malloc(sizeof(char*) * i);
     while (x < i)
     {
@@ -89,7 +89,7 @@ char    **biggerMap(char **map)
         y++;
     }
     temp[y] = 0;
-    isMapChange = 1;
+    ismapchange = 1;
     return (temp);
 
 }

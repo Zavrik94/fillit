@@ -91,7 +91,7 @@ int         ft_check2(char *s)
         }
     }
     //printf("%c %c\n", s[strlen(s) - 1], s[strlen(s) - 2]);
-    if ((s[strlen(s) - 1]) != '\n' && ((s[strlen(s) - 2]) != '.' || (s[strlen(s) - 2]) != '#'))
+    if ((s[ft_strlen(s) - 1]) != '\n' && ((s[ft_strlen(s) - 2]) != '.' || (s[ft_strlen(s) - 2]) != '#'))
         return (0);
     return (1);
 }

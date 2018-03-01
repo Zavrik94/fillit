@@ -56,7 +56,7 @@ int     checkPossible(char **map, tetra *tetramin, int xcoord, int ycoord)
     cord = (int*)malloc(sizeof(int) * 2);
     cord[1] = (int)xcoord;
     cord[0] = (int)ycoord;
-    if (((xcoord + tetramin->xlong) > ((int)strlen(map[0]))) || ((ycoord + tetramin->ylong - 1) > ((int)strlen(map[0]))))
+    if (((xcoord + tetramin->xlong) > ((int)ft_strlen(map[0]))) || ((ycoord + tetramin->ylong - 1) > ((int)ft_strlen(map[0]))))
     {
         return (0);
     }
@@ -124,8 +124,8 @@ int     *currCoord(char **map, tetra *tetramin)
 
     x = 0;
     y = 0;
-    minx = strlen(map[0]);
-    miny = strlen(map[0]);
+    minx = ft_strlen(map[0]);
+    miny = ft_strlen(map[0]);
     if (!(res = (int*)malloc(sizeof(int) * 4)))
         return(NULL);
 
