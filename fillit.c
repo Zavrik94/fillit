@@ -28,13 +28,13 @@ int         main(int argc, char **argv)
     else
     {
 	    read = ft_read(argv[1]);
-        //if (ft_checker(read) == 0)
-        //{
-          //  write(1, "error\n", 6);
-            //return (0);
-        //}
-        //else
-        //{
+        if (ft_check(read) == 0)
+        {
+            write(1, "error\n", 6);
+            return (0);
+        }
+        else
+        {
             res = ft_splitinput(read);
             if (!(res2 = (char***)malloc(sizeof(char**) * (ft_counttetramin(read) + 1))))
                 return (0);
@@ -56,6 +56,6 @@ int         main(int argc, char **argv)
             free(tetramin);
             free(g_map);
             return (0);
-        //}
+        }
     }
 }

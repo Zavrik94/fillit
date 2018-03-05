@@ -36,6 +36,7 @@ char				**g_map;
 int					g_ismapchange;
 
 void				ft_printarr(char **arr);
+int					ft_check(char *read);
 void				settetra(t_tetra *tetramin);
 int					*ft_coord(char **s);
 int					checkpossible(char **map, t_tetra *tet, int xc, int yc);
@@ -44,7 +45,6 @@ int					*currcoord(char **map, t_tetra *tetramin);
 int					*findnextstart(char **map, t_tetra *tetramin, int *coord);
 t_tetra				*firstlist(t_tetra *tetramin);
 t_tetra				*fillist(char ***res2);
-int					ft_checker(char *s);
 char				*ft_read(char *file);
 char				*writemap(int count, t_tetra *tetramin);
 char				**biggermap(char **map);

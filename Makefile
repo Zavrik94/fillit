@@ -1,7 +1,6 @@
 NAME =	fillit
 SRC_D = src/
 SRC =	$(SRC_D)ft_read.c \
-		$(SRC_D)ft_checker.c \
 		$(SRC_D)ft_splitinput.c \
 		$(SRC_D)ft_lists.c \
 		$(SRC_D)ft_splittetra.c \
@@ -10,6 +9,7 @@ SRC =	$(SRC_D)ft_read.c \
 		$(SRC_D)ft_find.c \
 		$(SRC_D)ft_printarr.c \
 		$(SRC_D)ft_writemap.c \
+		$(SRC_D)ft_check.c \
 		fillit.c
 LIB_D = libft/
 LIB = $(LIB_D)libft.a
