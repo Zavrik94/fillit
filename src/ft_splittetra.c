@@ -48,16 +48,10 @@ static int		*ft_longtetra(char *s, char ch)
 		return (NULL);
 	i = -1;
 	while (s[++i] != '\0')
-	{
 		if (s[i] == ch && s[i + 1] != ch)
-		{
 			res[c++] = countintetra(s, ch, i + 1);
-		}
 		else if (i == 0 && s[i] != ch)
-		{
 			res[c++] = countintetra(s, ch, 0);
-		}
-	}
 	res[0] = cword;
 	return (res);
 }
@@ -83,26 +77,27 @@ static char		*ft_writetetra(char *s, int i, int c)
 char			**ft_splittetra(const char *s)
 {
 	int		i;
-	int		c;
-	int		c1;
+	int		*c;
 	int		*res;
 	char	**rch;
-	char	ch = '\n';
+	char	ch;
 
-	c = 0;
+	if (!(c = (int*)malloc(sizeof(int) * 2)))
+		return (NULL);
+	ch = '\n';
+	c[0] = 0;
 	res = ft_longtetra((char*)s, ch);
 	if (!res || !(rch = (char **)malloc(sizeof(char *) * (res[0] + 1))))
 		return (NULL);
 	i = -1;
-	i = -1;
 	while (s[++i])
 	{
-		c1 = c + 1;
+		c[1] = c[0] + 1;
 		if (s[i] != ch && i == 0)
-			rch[c++] = ft_writetetra((char *)s, i, res[c1]);
+			rch[c[0]++] = ft_writetetra((char *)s, i, res[c[1]]);
 		else if ((s[i] != ch && s[i - 1] == ch))
-			rch[c++] = ft_writetetra((char *)s, i, res[c1]);
+			rch[c[0]++] = ft_writetetra((char *)s, i, res[c[1]]);
 	}
-	rch[c] = 0;
+	rch[c[0]] = 0;
 	return (rch);
 }

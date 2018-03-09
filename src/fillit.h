@@ -6,7 +6,7 @@
 /*   By: azavrazh <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/01 17:39:06 by azavrazh          #+#    #+#             */
-/*   Updated: 2018/03/01 17:44:50 by azavrazh         ###   ########.fr       */
+/*   Updated: 2018/03/09 13:34:54 by azavrazh         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 typedef struct		s_tetra
 {
-	int				n;
 	int				x;
 	int				y;
 	int				xlong;
@@ -51,5 +50,6 @@ char				**biggermap(char **map);
 char				**ft_splitinput(const char *s);
 char				**ft_splittetra(const char *s);
 int					ft_counttetramin(char *s);
+int					*initres(void);
 
 #endif

@@ -56,27 +56,27 @@ static char		*ft_write(char *s, int i, int c)
 char			**ft_splitinput(const char *s)
 {
 	int		i;
-	int		c;
-	int		c1;
+	int		*c;
 	int		*res;
 	char	**rch;
 	char	ch;
 
-	c = 0;
+	if (!(c = (int*)malloc(sizeof(int) * 2)))
+		return (NULL);
+	c[0] = 0;
 	ch = '\n';
 	res = ft_long((char*)s, ch);
 	if (!res || !(rch = (char **)malloc(sizeof(char *) * (res[0] + 1))))
 		return (NULL);
 	i = -1;
-	i = -1;
 	while (s[++i])
 	{
-		c1 = c + 1;
+		c[1] = c[0] + 1;
 		if (s[i] != ch && i == 0)
-			rch[c++] = ft_write((char *)s, i, res[c1]);
-		else if ((s[i] != ch && s[i - 1] == ch && s[i - 2 ] == ch))
-			rch[c++] = ft_write((char *)s, i, res[c1]);
+			rch[c[0]++] = ft_write((char *)s, i, res[c[1]]);
+		else if ((s[i] != ch && s[i - 1] == ch && s[i - 2] == ch))
+			rch[c[0]++] = ft_write((char *)s, i, res[c[1]]);
 	}
-	rch[c] = 0;
+	rch[c[0]] = 0;
 	return (rch);
 }
