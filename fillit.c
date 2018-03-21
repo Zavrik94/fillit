@@ -36,25 +36,21 @@ int			main(int argc, char **argv)
 	char	***res;
 	t_tetra	*tetramin;
 
-	if (argc != 2)
-		write(1, "error\n", 6);
-	else
-	{
-		read = ft_read(argv[1]);
-		if (ft_check(read) == 0)
-			write(1, "error\n", 6);
-		else
-		{
-			res = get_res(read);
-			tetramin = fillist(res);
-			g_map = ft_splittetra(writemap(ft_counttetramin(read), tetramin));
-			settetra(tetramin);
-			ft_printarr(g_map);
-			free(read);
-			free(res);
-			free(tetramin);
-			free(g_map);
-		}
-	}
+	if (argc != 2 && write(1, "error\n", 7))
+		return (0);
+	read = ft_read(argv[1]);
+	if (ft_checker(read) == 0 && write(1, "error\n", 7))
+		return (0);
+	res = get_res(read);
+	if (tetr_check(res) == 0 && write(1, "error\n", 7))
+		return (0);
+	tetramin = fillist(res);
+	g_map = ft_splittetra(writemap(ft_counttetramin(read), tetramin));
+	settetra(tetramin);
+	ft_printarr(g_map);
+	free(read);
+	free(res);
+	free(tetramin);
+	free(g_map);
 	return (0);
 }

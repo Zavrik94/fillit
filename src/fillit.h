@@ -16,6 +16,7 @@
 # include <stdlib.h>
 # include <string.h>
 # include <fcntl.h>
+# include <stdio.h>
 # include "../libft/libft.h"
 
 typedef struct		s_tetra
@@ -35,7 +36,8 @@ char				**g_map;
 int					g_ismapchange;
 
 void				ft_printarr(char **arr);
-int					ft_check(char *read);
+int					ft_checker(char *read);
+int					tetr_check(char ***res);
 void				settetra(t_tetra *tetramin);
 int					*ft_coord(char **s);
 int					checkpossible(char **map, t_tetra *tet, int xc, int yc);

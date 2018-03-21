@@ -12,134 +12,68 @@
 
 #include "fillit.h"
 
-int		tetr_check(int i, char *s)
+int		checkit(char **tetra, int chk, int hash)
 {
-	while (s[i] != '\0')
+	int x;
+	int y;
+
+	y = -1;
+	while (tetra[++y])
 	{
-		if (s[i] == '#')
-		{
-			if (s[i + 3] == '#' && s[i + 4] == '#' && s[i + 5] == '#')
-				i += 5;
-			else if (s[i + 5] == '#' && s[i + 10] == '#' && s[i + 11] == '#')
-				i += 11;
-			else if (s[i + 5] == '#' && s[i + 9] == '#' && s[i + 10] == '#')
-				i += 10;
-			else if (s[i + 1] == '#' && s[i + 5] == '#' && s[i + 10] == '#')
-				i += 10;
-			else if (s[i + 1] == '#' && s[i + 2] == '#' && s[i + 3] == '#')
-				i += 3;
-			else if (s[i + 1] == '#' && s[i + 2] == '#' && s[i + 7] == '#')
-				i += 7;
-			else if (s[i + 1] == '#' && s[i + 2] == '#' && s[i + 5] == '#')
-				i += 5;
-			else if (s[i + 1] == '#' && s[i + 5] == '#' && s[i + 6] == '#')
-				i += 6;
-			else if (s[i + 5] == '#' && s[i + 6] == '#' && s[i + 7] == '#')
-				i += 7;
-			else if (s[i + 4] == '#' && s[i + 5] == '#' && s[i + 6] == '#')
-				i += 6;
-			else if (s[i + 4] == '#' && s[i + 5] == '#' && s[i + 10] == '#')
-				i += 10;
-			else if (s[i + 1] == '#' && s[i + 2] == '#' && s[i + 6] == '#')
-				i += 6;
-			else if (s[i + 5] == '#' && s[i + 6] == '#' && s[i + 10] == '#')
-				i += 10;
-			else if (s[i + 1] == '#' && s[i + 6] == '#' && s[i + 7] == '#')
-				i += 7;
-			else if (s[i + 4] == '#' && s[i + 5] == '#' && s[i + 9] == '#')
-				i += 9;
-			else if (s[i + 5] == '#' && s[i + 6] == '#' && s[i + 11] == '#')
-				i += 11;
-			else if (s[i + 1] == '#' && s[i + 4] == '#' && s[i + 5] == '#')
-				i += 5;
-			else if (s[i + 5] == '#' && s[i + 10] == '#' && s[i + 15] == '#')
-				i += 15;
-			else if (s[i + 1] == '#' && s[i + 6] == '#' && s[i + 11] == '#')
-				i += 11;
-			else if (s[i] == '.' || s[i] == '\n')
-				tetr_check(i, s);
-			else
-				return (0);
-		}
-		i++;
-	}
-	return (1);
-}
-
-
-int		ft_checker(char *read)
-{
-	int	i;
-	int	s;
-	int	d;
-	int	t;
-	int	n;
-
-	t = 0;
-	i = 0;
-	s = 0;
-	d = 0;
-	n = 0;
-	if (read[i] == 0)
-		return(0);
-	while (read[i] != '\0')
-	{
-		if (read[i] == '.')
-			d++;
-		else if (read[i] == '#')
-			s++;
-		else if (read[i] == '\n' || read[i + 1] == '\0')
-		{
-			n++;
-			if(read[i + 1] == '\n' && read [i + 2] == '\0')
-				return(0);
-			if (d + s == 4 || d + s == 8 || d + s == 12 || d + s == 16)
+		x = -1;
+		while (tetra[y][++x])
+			if (tetra[y][x] == '#' && hash++ > -1)
 			{
-				if ((d == 0 || s == 0) && d + s == 16)
-					return(0);
-				if (d + s == 16 && s != 4)
-					 return(0);
-				if (d + s == 16 && read[i + 1] == '\0')
-					return(1);
-				if (d + s == 16 && read[i + 1] != '\n')
-					return(0);
-				if (read[i + 1] == '\n')
-					i++;
+				if (x != 0 && tetra[y][x - 1] == '#')
+					chk++;
+				if (y != 0 && tetra[y - 1][x] == '#')
+					chk++;
+				if (x != 3 && tetra[y][x + 1] == '#')
+					chk++;
+				if (y != 3 && tetra[y + 1][x] == '#')
+					chk++;
 			}
-			else
-				return (0);
-			if (d == 12 && s == 4 && d + s == 16)
-			{
-				if (d == 0 || s == 0)
-					return(0);
-				d = 0;
-				s = 0;
-				t++;
-			}
-		}
-		else
-				return(0);
-		i++;
 	}
-	if (n/t != 4)
-		return(0);
-	else
+	if (hash == 4 && (chk == 6 || chk == 8))
 		return (1);
+	return (0);
 }
 
-int         ft_check(char *read)
+int		tetr_check(char ***res)
 {
 	int i;
 
-	i = 0;
-	if (ft_checker(read) == 1)
+	i = -1;
+	while (res[++i])
+		if (checkit(res[i], 0, 0) == 0)
+			return (0);
+	return (1);
+}
+
+int		ft_checker(char *s)
+{
+	int i;
+	int line;
+	int tetr;
+
+	i = -1;
+	line = 4;
+	tetr = 20;
+	while (s[++i])
 	{
-			if (tetr_check(i, read) == 1)
-				return(1);
-			else
-				return(0);
+		if ((s[i] != '#' && s[i] != '.' && s[i] != '\n') || (s[i] == '\n' && \
+			s[i + 1] == '\n' && s[i + 2] == '\0'))
+			return (0);
+		if (i == line && s[i] != '\n')
+			return (0);
+		else if (i == line && s[i] == '\n')
+			line += 5;
+		if (i == tetr && s[i] != '\n')
+			return (0);
+		else if (i == tetr && s[i] == '\n' && line++ > -1)
+			tetr += 21;
 	}
-	else
-		return(0);
-	return (0);
+	if (i == 0)
+		return (0);
+	return (1);
 }
