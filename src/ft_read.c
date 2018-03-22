@@ -12,6 +12,16 @@
 
 #include "fillit.h"
 
+void		freearr(void **arr)
+{
+	int y;
+
+	y = -1;
+	while(arr[++y])
+		free(arr[y]);
+	free(arr);
+}
+
 int			*initres(void)
 {
 	int		*res;

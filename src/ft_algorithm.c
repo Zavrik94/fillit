@@ -60,12 +60,13 @@ int			ismove(char **g_map, t_tetra *tetramin)
 	int		x;
 	int		y;
 	int		*cur;
+	int		*res;
 
 	y = -1;
-	temp = (char**)malloc(sizeof(char*) * ft_strlen(g_map[0]) + 1);
+	temp = (char**)malloc(sizeof(char*) * (ft_strlen(g_map[0]) +1));
 	while (g_map[++y])
 	{
-		temp[y] = (char*)malloc(sizeof(char) * ft_strlen(g_map[0]) + 1);
+		temp[y] = (char*)malloc(sizeof(char) * (ft_strlen(g_map[0]) + 1));
 		x = -1;
 		while (g_map[y][++x])
 			temp[y][x] = g_map[y][x];
@@ -74,22 +75,31 @@ int			ismove(char **g_map, t_tetra *tetramin)
 	temp[y] = 0;
 	cur = currcoord(temp, tetramin);
 	deletetetra(temp, tetramin);
-	if (findnextstart(temp, tetramin, cur) == NULL)
+	res = findnextstart(temp, tetramin, cur);
+	if (res == NULL)
 	{
-		free(temp);
+		free(res);
+		free(cur);
+		freearr((void**)temp);
 		return (0);
 	}
-	free(temp);
+	free(res);
+	free(cur);
+	freearr((void**)temp);
 	return (1);
 }
 
 t_tetra		*move(t_tetra *tetramin)
 {
 	int		*res;
+	int		*cor;
+	int		i;
 
 	if (ismove(g_map, tetramin) == 0 && tetramin->prev == NULL)
 	{
-		g_map = biggermap(g_map);
+		i = (int)ft_strlen(g_map[0]) + 1;
+		freearr((void**)g_map);
+		g_map = biggermap(i);
 		tetramin = firstlist(tetramin);
 		return (tetramin->next);
 	}
@@ -100,10 +110,12 @@ t_tetra		*move(t_tetra *tetramin)
 	}
 	else
 	{
-		res = currcoord(g_map, tetramin);
+		cor = currcoord(g_map, tetramin);
 		deletetetra(g_map, tetramin);
-		res = findnextstart(g_map, tetramin, res);
+		res = findnextstart(g_map, tetramin, cor);
 		puttetra(g_map, tetramin, res);
+		free(cor);
+		free(res);
 	}
 	return (tetramin->next);
 }
@@ -114,7 +126,8 @@ void		settetra(t_tetra *tetramin)
 
 	if (tetramin == NULL)
 		return ;
-	while (findstart(g_map, tetramin) == NULL)
+	coord = findstart(g_map, tetramin);
+	while (coord == NULL)
 	{
 		tetramin = move(tetramin->prev);
 		if (g_ismapchange == 1)
@@ -122,8 +135,12 @@ void		settetra(t_tetra *tetramin)
 			tetramin = firstlist(tetramin);
 			g_ismapchange = 0;
 		}
+		free(coord);
+		coord = findstart(g_map, tetramin);
 	}
+	free(coord);
 	coord = findstart(g_map, tetramin);
 	puttetra(g_map, tetramin, coord);
+	free(coord);
 	settetra(tetramin->next);
 }

@@ -44,7 +44,7 @@ static int		*ft_longtetra(char *s, char ch)
 			cword++;
 		else if ((s[i] != ch && s[i - 1] == ch))
 			cword++;
-	if (!(res = (int*)malloc(sizeof(int) * (cword + 1))))
+	if (!(res = (int*)malloc(sizeof(int) * (cword + 2))))
 		return (NULL);
 	i = -1;
 	while (s[++i] != '\0')
@@ -99,5 +99,7 @@ char			**ft_splittetra(const char *s)
 			rch[c[0]++] = ft_writetetra((char *)s, i, res[c[1]]);
 	}
 	rch[c[0]] = 0;
+	free(res);
+	free(c);
 	return (rch);
 }

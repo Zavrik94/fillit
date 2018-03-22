@@ -78,5 +78,7 @@ char			**ft_splitinput(const char *s)
 			rch[c[0]++] = ft_write((char *)s, i, res[c[1]]);
 	}
 	rch[c[0]] = 0;
+	free(c);
+	free(res);
 	return (rch);
 }

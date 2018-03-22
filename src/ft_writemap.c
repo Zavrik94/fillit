@@ -64,20 +64,18 @@ char		*writemap(int count, t_tetra *tetramin)
 	return (s);
 }
 
-char		**biggermap(char **g_map)
+char		**biggermap(int i)
 {
 	int		x;
 	int		y;
 	char	**temp;
-	int		i;
 
 	x = -1;
 	y = -1;
-	i = ft_strlen(g_map[0]) + 1;
 	temp = (char**)malloc(sizeof(char*) * i);
-	while (++x < i)
+	while (++x <= i)
 		temp[x] = (char*)malloc(sizeof(char) * i);
-	while (++y < i)
+	while (++y <= i)
 	{
 		x = -1;
 		while (++x < i)
