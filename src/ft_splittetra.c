@@ -80,22 +80,20 @@ char			**ft_splittetra(const char *s)
 	int		*c;
 	int		*res;
 	char	**rch;
-	char	ch;
 
 	if (!(c = (int*)malloc(sizeof(int) * 2)))
 		return (NULL);
-	ch = '\n';
 	c[0] = 0;
-	res = ft_longtetra((char*)s, ch);
+	res = ft_longtetra((char*)s, '\n');
 	if (!res || !(rch = (char **)malloc(sizeof(char *) * (res[0] + 1))))
 		return (NULL);
 	i = -1;
 	while (s[++i])
 	{
 		c[1] = c[0] + 1;
-		if (s[i] != ch && i == 0)
+		if (s[i] != '\n' && i == 0)
 			rch[c[0]++] = ft_writetetra((char *)s, i, res[c[1]]);
-		else if ((s[i] != ch && s[i - 1] == ch))
+		else if ((s[i] != '\n' && s[i - 1] == '\n'))
 			rch[c[0]++] = ft_writetetra((char *)s, i, res[c[1]]);
 	}
 	rch[c[0]] = 0;

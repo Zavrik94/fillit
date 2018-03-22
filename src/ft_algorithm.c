@@ -63,7 +63,7 @@ int			ismove(char **g_map, t_tetra *tetramin)
 	int		*res;
 
 	y = -1;
-	temp = (char**)malloc(sizeof(char*) * (ft_strlen(g_map[0]) +1));
+	temp = (char**)malloc(sizeof(char*) * (ft_strlen(g_map[0]) + 1));
 	while (g_map[++y])
 	{
 		temp[y] = (char*)malloc(sizeof(char) * (ft_strlen(g_map[0]) + 1));
@@ -76,24 +76,15 @@ int			ismove(char **g_map, t_tetra *tetramin)
 	cur = currcoord(temp, tetramin);
 	deletetetra(temp, tetramin);
 	res = findnextstart(temp, tetramin, cur);
-	if (res == NULL)
-	{
-		free(res);
-		free(cur);
-		freearr((void**)temp);
+	if (iffree(res, cur, temp) && res == NULL)
 		return (0);
-	}
-	free(res);
-	free(cur);
-	freearr((void**)temp);
 	return (1);
 }
 
-t_tetra		*move(t_tetra *tetramin)
+t_tetra		*move(t_tetra *tetramin, int i)
 {
 	int		*res;
 	int		*cor;
-	int		i;
 
 	if (ismove(g_map, tetramin) == 0 && tetramin->prev == NULL)
 	{
@@ -106,7 +97,7 @@ t_tetra		*move(t_tetra *tetramin)
 	else if (ismove(g_map, tetramin) == 0)
 	{
 		deletetetra(g_map, tetramin);
-		tetramin = move(tetramin->prev)->prev;
+		tetramin = move(tetramin->prev, 0)->prev;
 	}
 	else
 	{
@@ -114,8 +105,7 @@ t_tetra		*move(t_tetra *tetramin)
 		deletetetra(g_map, tetramin);
 		res = findnextstart(g_map, tetramin, cor);
 		puttetra(g_map, tetramin, res);
-		free(cor);
-		free(res);
+		iffree(cor, res, NULL);
 	}
 	return (tetramin->next);
 }
@@ -129,7 +119,7 @@ void		settetra(t_tetra *tetramin)
 	coord = findstart(g_map, tetramin);
 	while (coord == NULL)
 	{
-		tetramin = move(tetramin->prev);
+		tetramin = move(tetramin->prev, 0);
 		if (g_ismapchange == 1)
 		{
 			tetramin = firstlist(tetramin);

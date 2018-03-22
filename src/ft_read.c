@@ -17,7 +17,7 @@ void		freearr(void **arr)
 	int y;
 
 	y = -1;
-	while(arr[++y])
+	while (arr[++y])
 		free(arr[y]);
 	free(arr);
 }

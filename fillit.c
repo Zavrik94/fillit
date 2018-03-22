@@ -12,6 +12,19 @@
 
 #include "src/fillit.h"
 
+void		freeall(char ***res, t_tetra *tetramin, char *read)
+{
+	int		i;
+
+	i = -1;
+	while (res[++i])
+		freearr((void**)res[i]);
+	free(res);
+	free(read);
+	freearr((void**)g_map);
+	freelist(tetramin);
+}
+
 char		***get_res(char *read)
 {
 	int		i;
@@ -36,30 +49,22 @@ int			main(int argc, char **argv)
 	char	*read;
 	char	***res;
 	t_tetra	*tetramin;
-	int 	i;
 	char	*map;
 
 	if (argc != 2 && write(1, "error\n", 7))
 		return (0);
-	printf("%zu\n", sizeof(t_tetra));
 	read = ft_read(argv[1]);
 	if (ft_checker(read) == 0 && write(1, "error\n", 7))
 		return (0);
 	res = get_res(read);
 	if (tetr_check(res) == 0 && write(1, "error\n", 7))
 		return (0);
-	tetramin = fillist(res);
+	tetramin = fillist(res, -1);
 	map = writemap(ft_counttetramin(read), tetramin);
 	g_map = ft_splittetra(map);
 	free(map);
 	settetra(tetramin);
 	ft_printarr(g_map);
-	free(read);
-	i = -1;
-	while(res[++i])
-		freearr((void**)res[i]);
-	free(res);
-	freelist(tetramin);
-	freearr((void**)g_map);
+	freeall(res, tetramin, read);
 	return (0);
 }

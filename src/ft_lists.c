@@ -12,21 +12,18 @@
 
 #include "fillit.h"
 
-void freelist(t_tetra *list)
+void		freelist(t_tetra *list)
 {
 	t_tetra *temp;
 
+	list = firstlist(list);
+	free(list->prev);
 	while (list)
 	{
-		if (!list->prev)
-			break ;
-		temp = list->prev;
-		freearr((void**)list->tetr);
-		free(list->next);
+		temp = list->next;
 		free(list);
 		list = temp;
 	}
-	free(list->next);
 	free(list);
 }
 
@@ -37,26 +34,29 @@ t_tetra		*firstlist(t_tetra *tetramin)
 	return (tetramin);
 }
 
-t_tetra		*fillist(char ***res2)
+void		fill(t_tetra *tetramin, int *cor, char **res2, int i)
 {
-	int		i;
+	tetramin->x = cor[0];
+	tetramin->y = cor[1];
+	tetramin->xlong = cor[2];
+	tetramin->ylong = cor[3] + 1;
+	tetramin->tetr = res2;
+	tetramin->next = NULL;
+	tetramin->letter = i + 65;
+}
+
+t_tetra		*fillist(char ***res2, int i)
+{
 	t_tetra	*tetramin;
 	t_tetra	*temp;
 	int		*cor;
 
 	tetramin = (t_tetra*)malloc(sizeof(t_tetra));
 	tetramin->prev = NULL;
-	i = -1;
 	while (res2[++i])
 	{
 		cor = ft_coord(res2[i]);
-		tetramin->x = cor[0];
-		tetramin->y = cor[1];
-		tetramin->xlong = cor[2];
-		tetramin->ylong = cor[3] + 1;
-		tetramin->tetr = res2[i];
-		tetramin->next = NULL;
-		tetramin->letter = i + 65;
+		fill(tetramin, cor, res2[i], i);
 		temp = tetramin;
 		tetramin->next = (t_tetra*)malloc(sizeof(t_tetra));
 		tetramin = tetramin->next;
@@ -65,6 +65,7 @@ t_tetra		*fillist(char ***res2)
 	}
 	tetramin = tetramin->prev;
 	tetramin->next = NULL;
+	free(tetramin->next);
 	tetramin = firstlist(tetramin);
 	return (tetramin);
 }

@@ -59,22 +59,19 @@ char			**ft_splitinput(const char *s)
 	int		*c;
 	int		*res;
 	char	**rch;
-	char	ch;
 
 	if (!(c = (int*)malloc(sizeof(int) * 2)))
 		return (NULL);
-	c[0] = 0;
-	ch = '\n';
-	res = ft_long((char*)s, ch);
+	res = ft_long((char*)s, '\n');
 	if (!res || !(rch = (char **)malloc(sizeof(char *) * (res[0] + 1))))
 		return (NULL);
 	i = -1;
 	while (s[++i])
 	{
 		c[1] = c[0] + 1;
-		if (s[i] != ch && i == 0)
+		if (s[i] != '\n' && i == 0)
 			rch[c[0]++] = ft_write((char *)s, i, res[c[1]]);
-		else if ((s[i] != ch && s[i - 1] == ch && s[i - 2] == ch))
+		else if ((s[i] != '\n' && s[i - 1] == '\n' && s[i - 2] == '\n'))
 			rch[c[0]++] = ft_write((char *)s, i, res[c[1]]);
 	}
 	rch[c[0]] = 0;

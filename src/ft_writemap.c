@@ -75,7 +75,7 @@ char		**biggermap(int i)
 	temp = (char**)malloc(sizeof(char*) * i);
 	while (++x <= i)
 		temp[x] = (char*)malloc(sizeof(char) * i);
-	while (++y <= i)
+	while (++y < i)
 	{
 		x = -1;
 		while (++x < i)

@@ -12,6 +12,15 @@
 
 #include "fillit.h"
 
+int		iffree(int *res, int *cur, char **temp)
+{
+	free(res);
+	free(cur);
+	if (temp != NULL)
+		freearr((void**)temp);
+	return (1);
+}
+
 void	ft_printarr(char **arr)
 {
 	int	i;
